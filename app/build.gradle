@@ -18,6 +18,9 @@ android {
         }
     }
     useLibrary 'org.apache.http.legacy'
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+    }
 }
 
 configurations {
@@ -25,16 +28,17 @@ configurations {
 }
 
 dependencies {
-    compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.3'
-    compile group: 'org.apache.httpcomponents', name: 'httpclient-android', version: '4.3.5.1'
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.7.0'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.7.0'
+    compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.3'
+    compile group: 'org.apache.httpcomponents', name: 'httpclient-android', version: '4.3.5.1'
 
     testCompile 'junit:junit:4.12'
 }
