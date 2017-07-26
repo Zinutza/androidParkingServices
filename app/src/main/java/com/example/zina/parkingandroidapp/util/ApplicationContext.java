@@ -52,6 +52,8 @@ public class ApplicationContext {
     public static LoginGateway loginGateway() {
         if(loginGateway == null) {
             loginGateway = new LoginGateway();
+            loginGateway.setJsonUtils(jsonUtils());
+            loginGateway.setHttpUtils(httpUtils());
         }
         return loginGateway;
     }

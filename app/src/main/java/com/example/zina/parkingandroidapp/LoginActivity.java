@@ -2,7 +2,9 @@ package com.example.zina.parkingandroidapp;
 
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -44,5 +46,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String password = etPassword.getText().toString();
         LoginDetails loginDetails = new LoginDetails(email, password);
         User user = loginService.login(loginDetails);
+
+        Log.i("Login", "logged in successfully " + user.getId());
     }
 }
