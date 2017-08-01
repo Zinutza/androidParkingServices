@@ -22,6 +22,7 @@ public class HttpUtils {
         try {
             HttpPost post = new HttpPost(url);
             post.setEntity(new StringEntity(body));
+            post.setHeader("Content-Type", "application/json");
             return post;
         } catch (UnsupportedEncodingException e) {
             throw new IllegalStateException(e);

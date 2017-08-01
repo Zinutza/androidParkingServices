@@ -4,11 +4,11 @@ public class LoginDetails {
 
     private String email;
 
-    private String password;
+    private String passwordClearText;
 
     public LoginDetails(String email, String password) {
         this.email = email;
-        this.password = password;
+        this.passwordClearText = password;
     }
 
     public String getEmail() {
@@ -19,12 +19,12 @@ public class LoginDetails {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPasswordClearText() {
+        return passwordClearText;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPasswordClearText(String passwordClearText) {
+        this.passwordClearText = passwordClearText;
     }
 
 }

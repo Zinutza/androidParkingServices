@@ -1,10 +1,12 @@
 package com.example.zina.parkingandroidapp.model;
 
+import java.io.Serializable;
+
 /**
  * Created by Zina on 19/06/2017.
  */
 
-public class User {
+public class User implements Serializable {
 
     private Long id;
 

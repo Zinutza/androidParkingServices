@@ -36,7 +36,7 @@ public class LoginGateway {
         HttpResponse response = httpUtils.makeRequest(post);
         if(response.getStatusLine().getStatusCode() == 200) {
             String responseBody = httpUtils.extractResponseBody(response);
-            Log.i("LoginGateway", "Login request completed successfully");
+            Log.i("LoginGateway", "L]ogin request completed successfully");
             return jsonUtils.convertStringToObject(responseBody, User.class);
         }
         Log.i("LoginGateway", "Login request failed");
