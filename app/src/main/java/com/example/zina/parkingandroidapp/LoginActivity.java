@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.zina.parkingandroidapp.model.LoginDetails;
+import com.example.zina.parkingandroidapp.model.RegistrationDetails;
 import com.example.zina.parkingandroidapp.model.User;
 import com.example.zina.parkingandroidapp.services.LoginService;
 
@@ -19,6 +20,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText etEmail;
     EditText etPassword;
     Button loginButton;
+    Button registerButton;
 
     LoginService loginService;
 
@@ -30,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
         etEmail = (EditText) findViewById(R.id.etEmail);
         etPassword = (EditText) findViewById(R.id.etPassword);
         Button loginButton = (Button) findViewById(R.id.loginButton);
-        // registration button
+        Button registerButton = (Button) findViewById(R.id.registerButton); // registration button
 
         loginService = loginService();
 
@@ -49,6 +51,17 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(loginButtonHandler);
 
         //add a handler and a listener for register button
+        View.OnClickListener registerButtonHandler = new View.OnClickListener() {
+            public void onClick(View v) {
+                transitionToRegisterActivity();
+            }
+        };
+        registerButton.setOnClickListener(registerButtonHandler);
+    }
+
+    private void transitionToRegisterActivity() {
+        Intent intent = new Intent(this, RegisterActivity.class);
+        startActivity(intent);
     }
 
     private void transitionToMapActivity(User user) {

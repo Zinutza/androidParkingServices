@@ -3,8 +3,10 @@ package com.example.zina.parkingandroidapp.util;
 import com.example.zina.parkingandroidapp.gateway.HttpUtils;
 import com.example.zina.parkingandroidapp.gateway.JsonUtils;
 import com.example.zina.parkingandroidapp.gateway.LoginGateway;
+import com.example.zina.parkingandroidapp.gateway.ParkingLocationGateway;
 import com.example.zina.parkingandroidapp.gateway.RegistrationGateway;
 import com.example.zina.parkingandroidapp.services.LoginService;
+import com.example.zina.parkingandroidapp.services.ParkingLocationServices;
 import com.example.zina.parkingandroidapp.services.RegistrationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -95,4 +97,26 @@ public class ApplicationContext {
         }
         return jsonUtils;
     }
+
+    private static ParkingLocationServices parkingLocationServices;
+
+    public static ParkingLocationServices parkingLocationServices() {
+        if(parkingLocationServices == null) {
+            parkingLocationServices = new ParkingLocationServices();
+            parkingLocationServices.setParkingLocationGateway(parkingLocationGateway());
+        }
+        return parkingLocationServices;
+    }
+
+    private static ParkingLocationGateway parkingLocationGateway;
+
+    public static ParkingLocationGateway parkingLocationGateway() {
+        if(parkingLocationGateway == null) {
+            parkingLocationGateway = new ParkingLocationGateway();
+            parkingLocationGateway.setJsonUtils(jsonUtils());
+            parkingLocationGateway.setHttpUtils(httpUtils());
+        }
+        return parkingLocationGateway;
+    }
+
 }

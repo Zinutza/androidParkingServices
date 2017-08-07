@@ -9,6 +9,9 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 
 import com.example.zina.parkingandroidapp.location.GPSTracker;
+import com.example.zina.parkingandroidapp.model.ParkingLocation;
+import com.example.zina.parkingandroidapp.services.ParkingLocationServices;
+import com.example.zina.parkingandroidapp.util.ApplicationContext;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -16,9 +19,13 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.List;
+
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+
+    private ParkingLocationServices parkingLocationServices;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +42,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                     android.Manifest.permission.ACCESS_FINE_LOCATION,
                     android.Manifest.permission.ACCESS_COARSE_LOCATION }, 0);
         }
+
+        parkingLocationServices = ApplicationContext.parkingLocationServices();
     }
 
 
@@ -58,6 +67,15 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
         LatLng currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
         mMap.addMarker(new MarkerOptions().position(currentLocation).title("Current Location"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
+
+
+        List<ParkingLocation> nearbyParking = parkingLocationServices
+                .findParkingNearby(currentLocation.latitude, currentLocation.longitude);
+
+//        mMap.addMarker(new MarkerOptions()
+//                .position(currentLocation)
+//                .icon(BitmapDescriptorFactory
+//                        .defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 12f));
     }
 }

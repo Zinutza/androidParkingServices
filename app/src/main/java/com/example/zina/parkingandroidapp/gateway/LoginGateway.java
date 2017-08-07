@@ -32,11 +32,11 @@ public class LoginGateway {
     public User login(LoginDetails loginDetails) {
         Log.i("LoginGateway", "Sending login request");
         String body = jsonUtils.convertObjectToString(loginDetails);
-        HttpPost post = httpUtils.buildHttpPost(loginUrl, body);
-        HttpResponse response = httpUtils.makeRequest(post);
+        HttpPost httpPost = httpUtils.buildHttpPost(loginUrl, body);
+        HttpResponse response = httpUtils.makeRequest(httpPost);
         if(response.getStatusLine().getStatusCode() == 200) {
             String responseBody = httpUtils.extractResponseBody(response);
-            Log.i("LoginGateway", "L]ogin request completed successfully");
+            Log.i("LoginGateway", "Login request completed successfully");
             return jsonUtils.convertStringToObject(responseBody, User.class);
         }
         Log.i("LoginGateway", "Login request failed");
