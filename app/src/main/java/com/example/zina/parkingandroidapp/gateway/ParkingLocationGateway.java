@@ -4,13 +4,10 @@ import android.os.StrictMode;
 import android.util.Log;
 
 import com.example.zina.parkingandroidapp.model.ParkingLocation;
-import com.example.zina.parkingandroidapp.model.User;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -25,7 +22,7 @@ public class ParkingLocationGateway {
 
     private String parkingLocationsUrl;
 
-    private static final String SERVICE_NAME = "parkingLocation";
+    private static final String SERVICE_NAME = "parkinglocations";
 
     private JsonUtils jsonUtils;
     private HttpUtils httpUtils;
@@ -40,7 +37,7 @@ public class ParkingLocationGateway {
     public List<ParkingLocation> findParkingNearby(double latitude, double longitude) {
         Log.i("ParkingLocationGateway", "Sending local parking location request");
         String queryUrl = buildQueryUrl(parkingLocationsUrl, latitude, longitude);
-        HttpGet httpGet= httpUtils.buildHttpGet(queryUrl);
+        HttpGet httpGet = httpUtils.buildHttpGet(queryUrl);
         HttpResponse response = httpUtils.makeRequest(httpGet);
         if(response.getStatusLine().getStatusCode() == 200) {
             String responseBody = httpUtils.extractResponseBody(response);

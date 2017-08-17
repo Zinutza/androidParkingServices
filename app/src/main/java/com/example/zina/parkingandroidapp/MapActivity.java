@@ -1,11 +1,13 @@
 package com.example.zina.parkingandroidapp;
 
-import android.*;
-import android.content.pm.PackageManager;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
+import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
-import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 
 import com.example.zina.parkingandroidapp.location.GPSTracker;
@@ -16,14 +18,21 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
+
+import static com.example.zina.parkingandroidapp.model.ParkingType.FREE;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+
+    private Geocoder geocoder;
 
     private ParkingLocationServices parkingLocationServices;
 
@@ -43,6 +52,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                     android.Manifest.permission.ACCESS_COARSE_LOCATION }, 0);
         }
 
+        geocoder = new Geocoder(this, Locale.getDefault());
         parkingLocationServices = ApplicationContext.parkingLocationServices();
     }
 
@@ -72,10 +82,52 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         List<ParkingLocation> nearbyParking = parkingLocationServices
                 .findParkingNearby(currentLocation.latitude, currentLocation.longitude);
 
-//        mMap.addMarker(new MarkerOptions()
-//                .position(currentLocation)
-//                .icon(BitmapDescriptorFactory
-//                        .defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+
+        for(ParkingLocation nearbyLocation : nearbyParking) {
+            LatLng markerLocation = new LatLng(nearbyLocation.getLatitude(), nearbyLocation.getLongitude());
+            MarkerOptions marker = new MarkerOptions();
+            marker.position(markerLocation);
+            //marker.title(nearbyLocation.getAddress());
+
+            List<Address> addressList = null;
+            try {
+                addressList = geocoder.getFromLocation(markerLocation.latitude,markerLocation.longitude,1);
+                marker.title(addressList.get(0).getAddressLine(0));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            if(nearbyLocation.getType() == FREE) {
+                marker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+            } else {
+                marker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
+            }
+            mMap.addMarker(marker);
+        }
+
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 12f));
+
+
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng point) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(MapActivity.this);
+                builder.setMessage("Would you like to add a new parking location?").setTitle("New Location");
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton)
+                    {
+                        dialog.dismiss();
+                    }
+                });
+                builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton)
+                    {
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
     }
 }
