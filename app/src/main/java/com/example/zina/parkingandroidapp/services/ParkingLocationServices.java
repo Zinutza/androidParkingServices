@@ -20,4 +20,8 @@ public class ParkingLocationServices {
     public List<ParkingLocation> findParkingNearby(double latitude, double longitude) {
         return parkingLocationGateway.findParkingNearby(latitude, longitude);
     }
+
+    public ParkingLocation createParkingLocation(ParkingLocation parkingLocation) {
+        return parkingLocationGateway.create(parkingLocation);
+    }
 }

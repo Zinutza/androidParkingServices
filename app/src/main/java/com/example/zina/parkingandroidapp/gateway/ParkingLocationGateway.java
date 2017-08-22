@@ -7,6 +7,7 @@ import com.example.zina.parkingandroidapp.model.ParkingLocation;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 
 import java.util.Arrays;
 import java.util.List;
@@ -49,6 +50,20 @@ public class ParkingLocationGateway {
         return null;
     }
 
+    public ParkingLocation create(ParkingLocation parkingLocation) {
+        Log.i("ParkingLocationGateway", "Sending create parking location request");
+        String requestBody = jsonUtils.convertObjectToString(parkingLocation);
+        HttpPost httpPost = httpUtils.buildHttpPost(parkingLocationsUrl, requestBody);
+        HttpResponse response = httpUtils.makeRequest(httpPost);
+        if(response.getStatusLine().getStatusCode() == 201) {
+            String responseBody = httpUtils.extractResponseBody(response);
+            Log.i("ParkingLocationGateway", "Create parking location request complete");
+            return jsonUtils.convertStringToObject(responseBody, ParkingLocation.class);
+        }
+        Log.i("ParkingLocationGateway", "Create parking location request failed");
+        return null;
+    }
+
     private String buildQueryUrl(String parkingLocationsUrl, double latitude, double longitude) {
         return parkingLocationsUrl + "?latitude=" + latitude + "&longitude=" + longitude;
     }
@@ -60,4 +75,6 @@ public class ParkingLocationGateway {
     public void setHttpUtils(HttpUtils httpUtils) {
         this.httpUtils = httpUtils;
     }
+
+
 }
