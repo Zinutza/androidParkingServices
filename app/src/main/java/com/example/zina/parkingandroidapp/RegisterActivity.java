@@ -1,7 +1,7 @@
 package com.example.zina.parkingandroidapp;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -11,9 +11,8 @@ import android.widget.EditText;
 import com.example.zina.parkingandroidapp.model.RegistrationDetails;
 import com.example.zina.parkingandroidapp.model.User;
 import com.example.zina.parkingandroidapp.services.RegistrationService;
-import com.example.zina.parkingandroidapp.util.ApplicationContext;
 
-import static com.example.zina.parkingandroidapp.util.ApplicationContext.*;
+import static com.example.zina.parkingandroidapp.util.ApplicationContext.registrationService;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -45,7 +44,20 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         String email = etEmail.getText().toString();
         String password = etPassword.getText().toString();
         String confirmedPassword = etConfirmPassword.getText().toString();
-        RegistrationDetails registrationDetails = new RegistrationDetails(email, password, confirmedPassword);
+
+        //TODO check passwords match
+
+        RegistrationDetails registrationDetails = new RegistrationDetails(email, password);
         User user = registrationService.register(registrationDetails);
+        if(user != null) {
+            transitionToMapActivity(user);
+        }
+        //TODO: handle error correctly
+    }
+
+    private void transitionToMapActivity(User user) {
+        Intent intent = new Intent(this, MapActivity.class);
+        intent.putExtra("user", user);
+        startActivity(intent);
     }
 }

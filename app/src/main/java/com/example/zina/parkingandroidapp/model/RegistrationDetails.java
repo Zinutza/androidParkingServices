@@ -6,12 +6,9 @@ public class RegistrationDetails {
 
     private String password;
 
-    private String confirmEmail;
-
-    public RegistrationDetails(String email, String password, String confirmEmail) {
+    public RegistrationDetails(String email, String password) {
         this.email = email;
         this.password = password;
-        this.confirmEmail = confirmEmail;
     }
 
     public String getEmail() {
@@ -28,13 +25,5 @@ public class RegistrationDetails {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getConfirmEmail() {
-        return confirmEmail;
-    }
-
-    public void setConfirmEmail(String confirmEmail) {
-        this.confirmEmail = confirmEmail;
     }
 }
