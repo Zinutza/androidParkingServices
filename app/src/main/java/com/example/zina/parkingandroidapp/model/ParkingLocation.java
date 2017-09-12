@@ -55,4 +55,9 @@ public class ParkingLocation {
     public void setType(ParkingType type) {
         this.type = type;
     }
+
+    @Override
+    public String toString() {
+        return address;
+    }
 }

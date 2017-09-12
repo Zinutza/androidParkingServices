@@ -26,7 +26,19 @@
         map:layout_constraintLeft_toLeftOf="parent"
         map:layout_constraintTop_toTopOf="parent"
         android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp" />
+        android:layout_marginRight="8dp"
+        map:layout_constraintHorizontal_bias="0.0"
+        map:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/favouriteButton"
+        android:layout_width="70dp"
+        android:layout_height="56dp"
+        android:background="@android:color/transparent"
+        android:text="🌟"
+        android:textSize="36sp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-5dp" />
 
 </android.support.constraint.ConstraintLayout>
 

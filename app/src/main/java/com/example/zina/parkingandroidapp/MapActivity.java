@@ -2,6 +2,7 @@ package com.example.zina.parkingandroidapp;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -12,12 +13,14 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.example.zina.parkingandroidapp.location.GPSTracker;
 import com.example.zina.parkingandroidapp.model.ParkingLocation;
 import com.example.zina.parkingandroidapp.model.ParkingType;
+import com.example.zina.parkingandroidapp.model.User;
 import com.example.zina.parkingandroidapp.services.ParkingLocationServices;
 import com.example.zina.parkingandroidapp.util.ApplicationContext;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -42,6 +45,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
     private ParkingLocationServices parkingLocationServices;
 
+    private Button favouriteButton;
+
+    private User user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +56,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        favouriteButton = (Button) findViewById(R.id.favouriteButton);
+
+        Intent intent = getIntent();
+        user = (User) intent.getSerializableExtra("user");
 
         if (ContextCompat.checkSelfPermission(getApplicationContext(),
                 android.Manifest.permission.ACCESS_FINE_LOCATION) == -1) {
@@ -131,6 +143,18 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 dialog.show();
             }
         });
+
+        favouriteButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                transitionToFavouritesActvity(user);
+            }
+        });
+    }
+
+    private void transitionToFavouritesActvity(User user) {
+        Intent intent = new Intent(this, FavouritesActivity.class);
+        intent.putExtra("user", user);
+        startActivity(intent);
     }
 
     private void addParkingLocationToMap(ParkingLocation parkingLocation) {

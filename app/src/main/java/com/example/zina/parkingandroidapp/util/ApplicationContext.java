@@ -1,10 +1,12 @@
 package com.example.zina.parkingandroidapp.util;
 
+import com.example.zina.parkingandroidapp.gateway.FavouritesGateway;
 import com.example.zina.parkingandroidapp.gateway.HttpUtils;
 import com.example.zina.parkingandroidapp.gateway.JsonUtils;
 import com.example.zina.parkingandroidapp.gateway.LoginGateway;
 import com.example.zina.parkingandroidapp.gateway.ParkingLocationGateway;
 import com.example.zina.parkingandroidapp.gateway.RegistrationGateway;
+import com.example.zina.parkingandroidapp.services.FavouritesService;
 import com.example.zina.parkingandroidapp.services.LoginService;
 import com.example.zina.parkingandroidapp.services.ParkingLocationServices;
 import com.example.zina.parkingandroidapp.services.RegistrationService;
@@ -117,6 +119,27 @@ public class ApplicationContext {
             parkingLocationGateway.setHttpUtils(httpUtils());
         }
         return parkingLocationGateway;
+    }
+
+    private static FavouritesService favouritesService;
+
+    public static FavouritesService favouritesService() {
+        if(favouritesService == null) {
+            favouritesService = new FavouritesService();
+            favouritesService.setFavouritesGateway(favouritesGateway());
+        }
+        return favouritesService;
+    }
+
+    private static FavouritesGateway favouritesGateway;
+
+    public static FavouritesGateway favouritesGateway() {
+        if(favouritesGateway == null) {
+            favouritesGateway = new FavouritesGateway();
+            favouritesGateway.setJsonUtils(jsonUtils());
+            favouritesGateway.setHttpUtils(httpUtils());
+        }
+        return favouritesGateway;
     }
 
 }
