@@ -49,6 +49,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
     private User user;
 
+    private ParkingLocation focusLocation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +63,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
         Intent intent = getIntent();
         user = (User) intent.getSerializableExtra("user");
+        focusLocation = (ParkingLocation) intent.getSerializableExtra("focusLocation");
 
         if (ContextCompat.checkSelfPermission(getApplicationContext(),
                 android.Manifest.permission.ACCESS_FINE_LOCATION) == -1) {
@@ -102,7 +105,13 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         for (ParkingLocation nearbyLocation : nearbyParking) {
             addParkingLocationToMap(nearbyLocation);
         }
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 12f));
+
+        if(focusLocation == null) {
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 12f));
+        } else {
+            LatLng focusLatLng = new LatLng(focusLocation.getLatitude(), focusLocation.getLongitude());
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(focusLatLng, 16f));
+        }
 
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
@@ -144,14 +153,15 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             }
         });
 
+
         favouriteButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                transitionToFavouritesActvity(user);
+                transitionToFavouritesActivity(user);
             }
         });
     }
 
-    private void transitionToFavouritesActvity(User user) {
+    private void transitionToFavouritesActivity(User user) {
         Intent intent = new Intent(this, FavouritesActivity.class);
         intent.putExtra("user", user);
         startActivity(intent);

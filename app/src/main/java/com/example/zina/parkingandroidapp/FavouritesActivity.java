@@ -3,6 +3,8 @@ package com.example.zina.parkingandroidapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -22,6 +24,10 @@ public class FavouritesActivity extends AppCompatActivity {
 
     private ListView favouritesListView;
 
+    private ArrayAdapter<ParkingLocation> favouritesListAdapter;
+
+    private ParkingLocation clickedFavourite;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,11 +41,29 @@ public class FavouritesActivity extends AppCompatActivity {
 
         favouritesListView = (ListView) findViewById(R.id.favouritesListView);
 
-        ArrayAdapter<ParkingLocation> arrayAdapter = new ArrayAdapter<ParkingLocation>(
+        favouritesListAdapter = new ArrayAdapter<ParkingLocation>(
                 this,
                 android.R.layout.simple_list_item_1,
                 favouriteLocations );
 
-        favouritesListView.setAdapter(arrayAdapter);
+        favouritesListView.setAdapter(favouritesListAdapter);
+
+        favouritesListView.setOnItemClickListener(new FavouritesClickHandler());
+    }
+
+    private void transitionToMapActivity() {
+        Intent intent = new Intent(this, MapActivity.class);
+        intent.putExtra("user", user);
+        intent.putExtra("focusLocation", clickedFavourite);
+        startActivity(intent);
+    }
+
+
+    private class FavouritesClickHandler implements AdapterView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            clickedFavourite = favouritesListAdapter.getItem(position);
+            transitionToMapActivity();
+        }
     }
 }
