@@ -7,4 +7,10 @@ package com.example.zina.parkingandroidapp.model;
 public enum ParkingType {
 
     FREE, PAID;
+
+    private boolean free;
+
+    public boolean isFree() {
+        return this.equals(FREE);
+    }
 }

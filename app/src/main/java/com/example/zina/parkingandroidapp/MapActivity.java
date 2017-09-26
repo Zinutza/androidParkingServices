@@ -29,6 +29,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
@@ -37,7 +38,7 @@ import java.util.Locale;
 
 import static com.example.zina.parkingandroidapp.model.ParkingType.FREE;
 
-public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private GoogleMap mMap;
 
@@ -50,6 +51,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private User user;
 
     private ParkingLocation focusLocation;
+
+    private List<ParkingLocation> nearbyParking;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +101,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         mMap.addMarker(new MarkerOptions().position(currentLocation).title("Current Location"));
 
 
-        List<ParkingLocation> nearbyParking = parkingLocationServices
+        nearbyParking = parkingLocationServices
                 .findParkingNearby(currentLocation.latitude, currentLocation.longitude);
 
 
@@ -153,7 +156,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             }
         });
 
-
+        mMap.setOnMarkerClickListener(this);
         favouriteButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 transitionToFavouritesActivity(user);
@@ -164,6 +167,13 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private void transitionToFavouritesActivity(User user) {
         Intent intent = new Intent(this, FavouritesActivity.class);
         intent.putExtra("user", user);
+        startActivity(intent);
+    }
+
+    private void transitionToParkingInfoActivity(ParkingLocation parkingLocation) {
+        Intent intent = new Intent(this, ParkingInfoActivity.class);
+        intent.putExtra("user", user);
+        intent.putExtra("parkingLocation", parkingLocation);
         startActivity(intent);
     }
 
@@ -189,5 +199,23 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             marker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
         }
         mMap.addMarker(marker);
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        ParkingLocation clickedLocation = findLocationByLatLng(this.nearbyParking, marker.getPosition().latitude, marker.getPosition().longitude);
+        transitionToParkingInfoActivity(clickedLocation);
+        return false;
+    }
+
+
+
+    private ParkingLocation findLocationByLatLng(List<ParkingLocation> locations, double latitude, double longitude) {
+        for(ParkingLocation location : locations) {
+            if(location.getLatitude().equals(latitude) && location.getLongitude().equals(longitude)) {
+                return location;
+            }
+        }
+        return null;
     }
 }

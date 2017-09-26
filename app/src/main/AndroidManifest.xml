@@ -33,7 +33,11 @@
         <activity
             android:name=".MapActivity"
             android:label="@string/title_activity_map" />
-        <activity android:name=".FavouritesActivity"></activity>
+        <activity android:name=".FavouritesActivity" />
+        <activity
+            android:name=".ParkingInfoActivity"
+            android:label="@string/title_activity_parking_info"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
