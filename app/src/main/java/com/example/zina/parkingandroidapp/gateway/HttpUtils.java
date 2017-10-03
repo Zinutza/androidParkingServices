@@ -4,6 +4,7 @@ import android.util.Log;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
@@ -36,6 +37,10 @@ public class HttpUtils {
         return new HttpGet(url);
     }
 
+    public HttpDelete buildHttpDelete(String url) {
+        return new HttpDelete(url);
+    }
+
     public HttpResponse makeRequest(HttpUriRequest request) {
         try {
             HttpResponse response = httpClient.execute(request);
@@ -60,6 +65,5 @@ public class HttpUtils {
     public void setHttpClient(HttpClient httpClient) {
         this.httpClient = httpClient;
     }
-
 
 }

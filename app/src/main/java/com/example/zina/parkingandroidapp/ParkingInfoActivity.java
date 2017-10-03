@@ -3,9 +3,11 @@ package com.example.zina.parkingandroidapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.zina.parkingandroidapp.model.FavouriteLocation;
 import com.example.zina.parkingandroidapp.model.ParkingLocation;
 import com.example.zina.parkingandroidapp.model.User;
 import com.example.zina.parkingandroidapp.services.FavouritesService;
@@ -41,8 +43,10 @@ public class ParkingInfoActivity extends AppCompatActivity {
 
         addFavouriteButton = (Button) findViewById(R.id.addFavouriteButton);
         addFavouriteButton.setVisibility(VISIBLE);
+        addFavouriteButton.setOnClickListener(new AddButtonOnClickListener());
         removeFavouriteButton = (Button) findViewById(R.id.removeFavouriteButton);
         removeFavouriteButton.setVisibility(VISIBLE);
+        removeFavouriteButton.setOnClickListener(new RemoveButtonOnClickListener());
 
         Intent intent = getIntent();
         user = (User) intent.getSerializableExtra("user");
@@ -66,7 +70,41 @@ public class ParkingInfoActivity extends AppCompatActivity {
     }
 
     private boolean aFavourite(ParkingLocation parkingLocation) {
-        return true;
+        for(ParkingLocation favourite : favourites) {
+            if(favourite.getId().equals(parkingLocation.getId())) {
+                return true;
+            }
+        }
+        return false;
     }
+
+    private void transitionToFavouritesScreen() {
+        Intent intent = new Intent(this, FavouritesActivity.class);
+        intent.putExtra("user", user);
+        startActivity(intent);
+    }
+
+    private void transitionToMapScreen() {
+        Intent intent = new Intent(this, MapActivity.class);
+        intent.putExtra("user", user);
+        startActivity(intent);
+    }
+
+    private class AddButtonOnClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            favouritesService.create(new FavouriteLocation(user.getId(), parkingLocation.getId()));
+            transitionToFavouritesScreen();
+        }
+    }
+
+    private class RemoveButtonOnClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            favouritesService.delete(new FavouriteLocation(user.getId(), parkingLocation.getId()));
+            transitionToMapScreen();
+        }
+    }
+
 
 }

@@ -1,6 +1,7 @@
 package com.example.zina.parkingandroidapp.services;
 
 import com.example.zina.parkingandroidapp.gateway.FavouritesGateway;
+import com.example.zina.parkingandroidapp.model.FavouriteLocation;
 import com.example.zina.parkingandroidapp.model.ParkingLocation;
 import com.example.zina.parkingandroidapp.model.User;
 
@@ -17,5 +18,13 @@ public class FavouritesService {
 
     public void setFavouritesGateway(FavouritesGateway favouritesGateway) {
         this.favouritesGateway = favouritesGateway;
+    }
+
+    public void create(FavouriteLocation favouriteLocation) {
+        favouritesGateway.create(favouriteLocation);
+    }
+
+    public void delete(FavouriteLocation favouriteLocation) {
+        favouritesGateway.delete(favouriteLocation);
     }
 }

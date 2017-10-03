@@ -66,4 +66,9 @@ public class FavouritesActivity extends AppCompatActivity {
             transitionToMapActivity();
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        transitionToMapActivity();
+    }
 }
