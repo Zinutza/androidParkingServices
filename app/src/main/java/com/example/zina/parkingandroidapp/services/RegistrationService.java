@@ -1,6 +1,7 @@
 package com.example.zina.parkingandroidapp.services;
 
 import com.example.zina.parkingandroidapp.gateway.RegistrationGateway;
+import com.example.zina.parkingandroidapp.gateway.Response;
 import com.example.zina.parkingandroidapp.model.RegistrationDetails;
 import com.example.zina.parkingandroidapp.model.User;
 
@@ -9,7 +10,7 @@ public class RegistrationService {
 
     private RegistrationGateway registrationGateway;
 
-    public User register(RegistrationDetails registrationDetails) {
+    public Response<User> register(RegistrationDetails registrationDetails) {
         return registrationGateway.register(registrationDetails);
     }
 

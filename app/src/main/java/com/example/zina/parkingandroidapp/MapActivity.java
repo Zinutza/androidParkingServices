@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.zina.parkingandroidapp.location.GPSTracker;
 import com.example.zina.parkingandroidapp.model.ParkingLocation;
@@ -36,6 +37,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
+import static android.view.View.*;
 import static com.example.zina.parkingandroidapp.model.ParkingType.FREE;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
@@ -139,14 +141,20 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 });
                 builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        ParkingLocation newParkingLocation = new ParkingLocation();
-                        newParkingLocation.setAddress(etAddress.getText().toString());
-                        newParkingLocation.setType(ParkingType.valueOf(parkingType.getSelectedItem().toString().toUpperCase()));
-                        newParkingLocation.setLatitude(point.latitude);
-                        newParkingLocation.setLongitude(point.longitude);
-                        ParkingLocation createdParkingLocation = parkingLocationServices.createParkingLocation(newParkingLocation);
-                        addParkingLocationToMap(createdParkingLocation);
-                        dialog.dismiss();
+                        String address = etAddress.getText().toString();
+                        if(!address.isEmpty()) {
+                            ParkingLocation newParkingLocation = new ParkingLocation();
+                            newParkingLocation.setAddress(etAddress.getText().toString());
+                            newParkingLocation.setType(ParkingType.valueOf(parkingType.getSelectedItem().toString().toUpperCase()));
+                            newParkingLocation.setLatitude(point.latitude);
+                            newParkingLocation.setLongitude(point.longitude);
+                            ParkingLocation createdParkingLocation = parkingLocationServices.createParkingLocation(newParkingLocation);
+                            addParkingLocationToMap(createdParkingLocation);
+                            dialog.dismiss();
+                        } else {
+                            TextView addressError = (TextView) findViewById(R.id.addressError);
+                            addressError.setVisibility(VISIBLE);
+                        }
                     }
                 });
                 AlertDialog dialog = builder.create();
@@ -157,7 +165,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         });
 
         mMap.setOnMarkerClickListener(this);
-        favouriteButton.setOnClickListener(new View.OnClickListener() {
+        favouriteButton.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 transitionToFavouritesActivity(user);
             }

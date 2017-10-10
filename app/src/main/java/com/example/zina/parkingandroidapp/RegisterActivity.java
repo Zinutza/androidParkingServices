@@ -7,7 +7,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
+import com.example.zina.parkingandroidapp.gateway.Response;
 import com.example.zina.parkingandroidapp.model.RegistrationDetails;
 import com.example.zina.parkingandroidapp.model.User;
 import com.example.zina.parkingandroidapp.services.RegistrationService;
@@ -20,6 +22,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     EditText etPassword;
     EditText etConfirmPassword;
     Button registerButton;
+
+    TextView emailError;
+    TextView passwordError;
+    TextView confirmPasswordError;
+    TextView passwordMatchError;
+    TextView serverError;
 
     RegistrationService registrationService;
 
@@ -35,6 +43,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         Button registerButton = (Button) findViewById(R.id.registerButton);
         registerButton.setOnClickListener(this);
 
+        emailError = (TextView) findViewById(R.id.emailError);
+        passwordError = (TextView) findViewById(R.id.passwordError);
+        confirmPasswordError = (TextView) findViewById(R.id.confirmPasswordError);
+        passwordMatchError = (TextView) findViewById(R.id.passwordMatchError);
+        serverError = (TextView) findViewById(R.id.serverError);
         registrationService = registrationService();
     }
 
@@ -45,14 +58,50 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         String password = etPassword.getText().toString();
         String confirmedPassword = etConfirmPassword.getText().toString();
 
-        //TODO check passwords match
+        serverError.setVisibility(View.INVISIBLE);
+        emailError.setVisibility(View.INVISIBLE);
+        passwordError.setVisibility(View.INVISIBLE);
+        confirmPasswordError.setVisibility(View.INVISIBLE);
+        passwordMatchError.setVisibility(View.INVISIBLE);
 
-        RegistrationDetails registrationDetails = new RegistrationDetails(email, password);
-        User user = registrationService.register(registrationDetails);
-        if(user != null) {
-            transitionToMapActivity(user);
+        if(email.isEmpty()) {
+            emailError.setVisibility(View.VISIBLE);
         }
-        //TODO: handle error correctly
+
+        if(password.isEmpty()) {
+            passwordError.setVisibility(View.VISIBLE);
+        }
+
+        if(confirmedPassword.isEmpty()) {
+            confirmPasswordError.setVisibility(View.VISIBLE);
+        }
+
+        if(shouldDisplayPasswordMatchError(password, confirmedPassword)) {
+            passwordMatchError.setVisibility(View.VISIBLE);
+        }
+
+
+        if(formFilled(email, password, confirmedPassword)) {
+            RegistrationDetails registrationDetails = new RegistrationDetails(email, password);
+            Response<User> response = registrationService.register(registrationDetails);
+            if(!response.isEmpty()) {
+                transitionToMapActivity(response.getEntity());
+            } else {
+                String errorText = response.getError();
+                if(errorText.contains("USER_EXISTS")) {
+                    serverError.setText("User already exists");
+                    serverError.setVisibility(View.VISIBLE);
+                }
+            }
+        }
+    }
+
+    private boolean shouldDisplayPasswordMatchError(String password, String confirmedPassword) {
+        return !confirmedPassword.isEmpty() && !password.isEmpty() && !password.equals(confirmedPassword);
+    }
+
+    private boolean formFilled(String email, String password, String confirmedPassword) {
+        return !email.isEmpty() && !password.isEmpty() && !confirmedPassword.isEmpty();
     }
 
     private void transitionToMapActivity(User user) {

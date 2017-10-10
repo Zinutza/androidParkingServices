@@ -28,6 +28,8 @@ public class FavouritesActivity extends AppCompatActivity {
 
     private ParkingLocation clickedFavourite;
 
+    //TODO: handle no favourites
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -70,10 +70,10 @@ public class LoginActivity extends AppCompatActivity {
             if(valid(email, password)) {
                 LoginDetails loginDetails = new LoginDetails(email, password);
                 User user = loginService.login(loginDetails);
-
-                transitionToMapActivity(user);
-
-                Log.i("Login", "logged in successfully " + user.getId());
+                if(user != null) {
+                    transitionToMapActivity(user);
+                    Log.i("Login", "logged in successfully " + user.getId());
+                }
             }
         }
     }

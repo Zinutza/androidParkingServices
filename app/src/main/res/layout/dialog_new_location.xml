@@ -5,6 +5,14 @@
     android:layout_height="match_parent"
     android:weightSum="1">
 
+    <TextView
+        android:id="@+id/addressError"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Please enter a name for this location"
+        android:textColor="@android:color/holo_red_light"
+        android:visibility="invisible" />
+
     <EditText
         android:id="@+id/etAddress"
         android:layout_width="match_parent"

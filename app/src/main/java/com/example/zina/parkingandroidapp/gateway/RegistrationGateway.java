@@ -31,6 +31,8 @@ public class RegistrationGateway {
     private HttpUtils httpUtils;
     private JsonUtils jsonUtils;
 
+    private String error;
+
     public RegistrationGateway() {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -39,18 +41,19 @@ public class RegistrationGateway {
         httpClient = HttpClientBuilder.create().build();
     }
 
-    public User register(RegistrationDetails registrationDetails) {
+    public Response<User> register(RegistrationDetails registrationDetails) {
         Log.i("RegistrationGateway", "Sending registration request");
         String body = jsonUtils.convertObjectToString(registrationDetails);
         HttpPost post = httpUtils.buildHttpPost(registerUrl, body);
         HttpResponse response = httpUtils.makeRequest(post);
+        String responseBody = httpUtils.extractResponseBody(response);
         if(response.getStatusLine().getStatusCode() == 200) {
-            String responseBody = httpUtils.extractResponseBody(response);
             Log.i("RegistrationGateway", "Registration request complete");
-            return jsonUtils.convertStringToObject(responseBody, User.class);
+            return new Response<User>(jsonUtils.convertStringToObject(responseBody, User.class));
+        } else {
+            Log.i("RegistrationGateway", "Registration request failed");
+            return new Response<User>(responseBody);
         }
-        Log.i("RegistrationGateway", "Registration request failed");
-        return null;
     }
 
     public void setObectMapper(ObjectMapper obectMapper) {
