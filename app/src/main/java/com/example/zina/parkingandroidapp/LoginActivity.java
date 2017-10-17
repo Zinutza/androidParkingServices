@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.zina.parkingandroidapp.gateway.Response;
 import com.example.zina.parkingandroidapp.model.LoginDetails;
 import com.example.zina.parkingandroidapp.model.User;
 import com.example.zina.parkingandroidapp.services.LoginService;
@@ -24,6 +25,7 @@ public class LoginActivity extends AppCompatActivity {
 
     TextView emailError;
     TextView passwordError;
+    TextView serviceError;
 
     LoginService loginService;
 
@@ -38,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         Button registerButton = (Button) findViewById(R.id.registerButton); // registration button
         emailError = (TextView) findViewById(R.id.emailError);
         passwordError = (TextView) findViewById(R.id.passwordError);
+        serviceError = (TextView) findViewById(R.id.serviceError);
 
         loginService = loginService();
         loginButton.setOnClickListener(new LoginButtonOnClickListener());
@@ -65,16 +68,34 @@ public class LoginActivity extends AppCompatActivity {
     private class LoginButtonOnClickListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
+            clearErrors();
             String email = etEmail.getText().toString();
             String password = etPassword.getText().toString();
             if(valid(email, password)) {
                 LoginDetails loginDetails = new LoginDetails(email, password);
-                User user = loginService.login(loginDetails);
-                if(user != null) {
-                    transitionToMapActivity(user);
-                    Log.i("Login", "logged in successfully " + user.getId());
+                Response<User> response = loginService.login(loginDetails);
+                if(!response.isEmpty()) {
+                    transitionToMapActivity(response.getEntity());
+                    Log.i("Login", "logged in successfully ");
+                } else {
+                    handleError(response.getError());
                 }
             }
+        }
+
+        
+    }
+
+    private void clearErrors() {
+        serviceError.setVisibility(View.INVISIBLE);
+        emailError.setVisibility(View.INVISIBLE);
+        passwordError.setVisibility(View.INVISIBLE);
+    }
+
+    private void handleError(String error) {
+        if(error.equals("\"NO_USER\"")) {
+            serviceError.setText("No user found");
+            serviceError.setVisibility(View.VISIBLE);
         }
     }
 
@@ -85,14 +106,10 @@ public class LoginActivity extends AppCompatActivity {
 
         if(email.isEmpty()) {
             emailError.setVisibility(View.VISIBLE);
-        } else {
-            emailError.setVisibility(View.INVISIBLE);
         }
 
         if(password.isEmpty()) {
             passwordError.setVisibility(View.VISIBLE);
-        }else {
-            passwordError.setVisibility(View.INVISIBLE);
         }
         return false;
     }

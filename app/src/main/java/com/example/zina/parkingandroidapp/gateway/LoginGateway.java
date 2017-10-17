@@ -29,7 +29,7 @@ public class LoginGateway {
         loginUrl = buildServiceURL(PROTOCOL, HOST, PORT, CONTEXT, SERVICE_NAME);
     }
 
-    public User login(LoginDetails loginDetails) {
+    public Response<User> login(LoginDetails loginDetails) {
         Log.i("LoginGateway", "Sending login request");
         String body = jsonUtils.convertObjectToString(loginDetails);
         HttpPost httpPost = httpUtils.buildHttpPost(loginUrl, body);
@@ -37,10 +37,12 @@ public class LoginGateway {
         if(response.getStatusLine().getStatusCode() == 200) {
             String responseBody = httpUtils.extractResponseBody(response);
             Log.i("LoginGateway", "Login request completed successfully");
-            return jsonUtils.convertStringToObject(responseBody, User.class);
+            return new Response<User>(jsonUtils.convertStringToObject(responseBody, User.class));
+        } else {
+            Log.i("RegistrationGateway", "Registration request failed");
+            String responseBody = httpUtils.extractResponseBody(response);
+            return new Response<User>(responseBody);
         }
-        Log.i("LoginGateway", "Login request failed");
-        return null;
     }
 
     public void setJsonUtils(JsonUtils jsonUtils) {

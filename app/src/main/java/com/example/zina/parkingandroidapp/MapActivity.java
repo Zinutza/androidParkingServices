@@ -37,7 +37,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-import static android.view.View.*;
+import static android.view.View.OnClickListener;
+import static android.view.View.VISIBLE;
 import static com.example.zina.parkingandroidapp.model.ParkingType.FREE;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
@@ -131,16 +132,27 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 parkingType.setAdapter(adapter);
 
                 final EditText etAddress = dialogLayout.findViewById(R.id.etAddress);
+                final TextView addressError = dialogLayout.findViewById(R.id.addressError);
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(MapActivity.this);
                 builder.setMessage("Would you like to add a new parking location?").setTitle("New Location");
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        dialog.dismiss();
+                        // Intentionally empty
                     }
                 });
                 builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
+                        // Intentionally empty
+                    }
+                });
+                final AlertDialog dialog = builder.create();
+
+                dialog.setView(dialogLayout);
+                dialog.show();
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
                         String address = etAddress.getText().toString();
                         if(!address.isEmpty()) {
                             ParkingLocation newParkingLocation = new ParkingLocation();
@@ -152,15 +164,16 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                             addParkingLocationToMap(createdParkingLocation);
                             dialog.dismiss();
                         } else {
-                            TextView addressError = (TextView) findViewById(R.id.addressError);
                             addressError.setVisibility(VISIBLE);
                         }
                     }
                 });
-                AlertDialog dialog = builder.create();
-
-                dialog.setView(dialogLayout);
-                dialog.show();
+                dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
             }
         });
 
