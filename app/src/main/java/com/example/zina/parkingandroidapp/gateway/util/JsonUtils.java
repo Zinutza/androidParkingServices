@@ -1,6 +1,5 @@
-package com.example.zina.parkingandroidapp.gateway;
+package com.example.zina.parkingandroidapp.gateway.util;
 
-import com.example.zina.parkingandroidapp.model.User;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 

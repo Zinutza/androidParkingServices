@@ -1,4 +1,4 @@
-package com.example.zina.parkingandroidapp.gateway;
+package com.example.zina.parkingandroidapp.gateway.util;
 
 /**
  * Created by Zina on 10/10/2017.

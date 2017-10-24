@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.zina.parkingandroidapp.gateway.Response;
+import com.example.zina.parkingandroidapp.gateway.util.Response;
 import com.example.zina.parkingandroidapp.model.LoginDetails;
 import com.example.zina.parkingandroidapp.model.User;
 import com.example.zina.parkingandroidapp.services.LoginService;

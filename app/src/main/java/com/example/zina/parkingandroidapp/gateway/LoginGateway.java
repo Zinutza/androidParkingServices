@@ -3,6 +3,9 @@ package com.example.zina.parkingandroidapp.gateway;
 import android.os.StrictMode;
 import android.util.Log;
 
+import com.example.zina.parkingandroidapp.gateway.util.HttpUtils;
+import com.example.zina.parkingandroidapp.gateway.util.JsonUtils;
+import com.example.zina.parkingandroidapp.gateway.util.Response;
 import com.example.zina.parkingandroidapp.model.LoginDetails;
 import com.example.zina.parkingandroidapp.model.User;
 
@@ -10,7 +13,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
 
 import static com.example.zina.parkingandroidapp.gateway.GatewayProperties.*;
-import static com.example.zina.parkingandroidapp.gateway.GatewayUtils.*;
+import static com.example.zina.parkingandroidapp.gateway.util.GatewayUtils.*;
 
 
 public class LoginGateway {

@@ -1,4 +1,4 @@
-package com.example.zina.parkingandroidapp.gateway;
+package com.example.zina.parkingandroidapp.gateway.util;
 
 import static com.example.zina.parkingandroidapp.gateway.GatewayProperties.CONTEXT;
 import static com.example.zina.parkingandroidapp.gateway.GatewayProperties.HOST;

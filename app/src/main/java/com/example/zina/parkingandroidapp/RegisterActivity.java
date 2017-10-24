@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.zina.parkingandroidapp.gateway.Response;
+import com.example.zina.parkingandroidapp.gateway.util.Response;
 import com.example.zina.parkingandroidapp.model.RegistrationDetails;
 import com.example.zina.parkingandroidapp.model.User;
 import com.example.zina.parkingandroidapp.services.RegistrationService;
@@ -58,30 +58,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         String password = etPassword.getText().toString();
         String confirmedPassword = etConfirmPassword.getText().toString();
 
-        serverError.setVisibility(View.INVISIBLE);
-        emailError.setVisibility(View.INVISIBLE);
-        passwordError.setVisibility(View.INVISIBLE);
-        confirmPasswordError.setVisibility(View.INVISIBLE);
-        passwordMatchError.setVisibility(View.INVISIBLE);
+        clearErrors();
 
-        if(email.isEmpty()) {
-            emailError.setVisibility(View.VISIBLE);
-        }
-
-        if(password.isEmpty()) {
-            passwordError.setVisibility(View.VISIBLE);
-        }
-
-        if(confirmedPassword.isEmpty()) {
-            confirmPasswordError.setVisibility(View.VISIBLE);
-        }
-
-        if(shouldDisplayPasswordMatchError(password, confirmedPassword)) {
-            passwordMatchError.setVisibility(View.VISIBLE);
-        }
-
-
-        if(formFilled(email, password, confirmedPassword)) {
+        if(valid(email, password, confirmedPassword)) {
             RegistrationDetails registrationDetails = new RegistrationDetails(email, password);
             Response<User> response = registrationService.register(registrationDetails);
             if(!response.isEmpty()) {
@@ -96,12 +75,43 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    private void clearErrors() {
+        serverError.setVisibility(View.INVISIBLE);
+        emailError.setVisibility(View.INVISIBLE);
+        passwordError.setVisibility(View.INVISIBLE);
+        confirmPasswordError.setVisibility(View.INVISIBLE);
+        passwordMatchError.setVisibility(View.INVISIBLE);
+    }
+
     private boolean shouldDisplayPasswordMatchError(String password, String confirmedPassword) {
         return !confirmedPassword.isEmpty() && !password.isEmpty() && !password.equals(confirmedPassword);
     }
 
-    private boolean formFilled(String email, String password, String confirmedPassword) {
-        return !email.isEmpty() && !password.isEmpty() && !confirmedPassword.isEmpty();
+    private boolean valid(String email, String password, String confirmedPassword) {
+
+        boolean valid = true;
+
+        if(email.isEmpty()) {
+            emailError.setVisibility(View.VISIBLE);
+            valid = false;
+        }
+
+        if(password.isEmpty()) {
+            passwordError.setVisibility(View.VISIBLE);
+            valid =  false;
+        }
+
+        if(confirmedPassword.isEmpty()) {
+            confirmPasswordError.setVisibility(View.VISIBLE);
+            valid =  false;
+        }
+
+        if(shouldDisplayPasswordMatchError(password, confirmedPassword)) {
+            passwordMatchError.setVisibility(View.VISIBLE);
+            valid =  false;
+        }
+
+        return valid;
     }
 
     private void transitionToMapActivity(User user) {

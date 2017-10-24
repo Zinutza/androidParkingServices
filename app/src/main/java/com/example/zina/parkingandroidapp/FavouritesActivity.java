@@ -35,21 +35,27 @@ public class FavouritesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favourites);
 
+        // Get user from previous activity
         Intent intent = getIntent();
         user = (User) intent.getSerializableExtra("user");
 
+        // Get the service
         favouritesService = favouritesService();
+
+        // Get list of favourites from backend
         List<ParkingLocation> favouriteLocations = favouritesService.list(user);
 
+        // Lookup list view from layout
         favouritesListView = (ListView) findViewById(R.id.favouritesListView);
 
+        // Add our list to the list view
         favouritesListAdapter = new ArrayAdapter<ParkingLocation>(
                 this,
                 android.R.layout.simple_list_item_1,
                 favouriteLocations );
-
         favouritesListView.setAdapter(favouritesListAdapter);
 
+        // Add the click handler
         favouritesListView.setOnItemClickListener(new FavouritesClickHandler());
     }
 

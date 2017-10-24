@@ -1,8 +1,8 @@
 package com.example.zina.parkingandroidapp.util;
 
 import com.example.zina.parkingandroidapp.gateway.FavouritesGateway;
-import com.example.zina.parkingandroidapp.gateway.HttpUtils;
-import com.example.zina.parkingandroidapp.gateway.JsonUtils;
+import com.example.zina.parkingandroidapp.gateway.util.HttpUtils;
+import com.example.zina.parkingandroidapp.gateway.util.JsonUtils;
 import com.example.zina.parkingandroidapp.gateway.LoginGateway;
 import com.example.zina.parkingandroidapp.gateway.ParkingLocationGateway;
 import com.example.zina.parkingandroidapp.gateway.RegistrationGateway;

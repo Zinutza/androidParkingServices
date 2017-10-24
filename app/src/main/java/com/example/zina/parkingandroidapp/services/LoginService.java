@@ -1,7 +1,7 @@
 package com.example.zina.parkingandroidapp.services;
 
 import com.example.zina.parkingandroidapp.gateway.LoginGateway;
-import com.example.zina.parkingandroidapp.gateway.Response;
+import com.example.zina.parkingandroidapp.gateway.util.Response;
 import com.example.zina.parkingandroidapp.model.LoginDetails;
 import com.example.zina.parkingandroidapp.model.User;
 

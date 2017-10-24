@@ -3,6 +3,9 @@ package com.example.zina.parkingandroidapp.gateway;
 import android.os.StrictMode;
 import android.util.Log;
 
+import com.example.zina.parkingandroidapp.gateway.util.HttpUtils;
+import com.example.zina.parkingandroidapp.gateway.util.JsonUtils;
+import com.example.zina.parkingandroidapp.gateway.util.Response;
 import com.example.zina.parkingandroidapp.model.RegistrationDetails;
 import com.example.zina.parkingandroidapp.model.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,7 +19,7 @@ import static com.example.zina.parkingandroidapp.gateway.GatewayProperties.CONTE
 import static com.example.zina.parkingandroidapp.gateway.GatewayProperties.HOST;
 import static com.example.zina.parkingandroidapp.gateway.GatewayProperties.PORT;
 import static com.example.zina.parkingandroidapp.gateway.GatewayProperties.PROTOCOL;
-import static com.example.zina.parkingandroidapp.gateway.GatewayUtils.buildServiceURL;
+import static com.example.zina.parkingandroidapp.gateway.util.GatewayUtils.buildServiceURL;
 
 public class RegistrationGateway {
 

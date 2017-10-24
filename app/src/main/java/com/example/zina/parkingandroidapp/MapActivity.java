@@ -225,7 +225,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     @Override
     public boolean onMarkerClick(Marker marker) {
         ParkingLocation clickedLocation = findLocationByLatLng(this.nearbyParking, marker.getPosition().latitude, marker.getPosition().longitude);
-        transitionToParkingInfoActivity(clickedLocation);
+        if(clickedLocation != null) {
+            transitionToParkingInfoActivity(clickedLocation);
+        }
         return false;
     }
 
