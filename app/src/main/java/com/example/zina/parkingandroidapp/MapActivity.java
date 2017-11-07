@@ -134,7 +134,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 final EditText etAddress = dialogLayout.findViewById(R.id.etAddress);
                 final TextView addressError = dialogLayout.findViewById(R.id.addressError);
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(MapActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(MapActivity.this, R.style.MyDialogTheme);
                 builder.setMessage("Would you like to add a new parking location?").setTitle("New Location");
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {

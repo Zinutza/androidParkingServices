@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ecf3f5"
     tools:context="com.example.zina.parkingandroidapp.MainActivity"
     tools:layout_editor_absoluteY="81dp"
     tools:layout_editor_absoluteX="0dp">
@@ -77,6 +78,8 @@
         android:layout_width="236dp"
         android:layout_height="48dp"
         android:text="Register"
+        android:background="#19678C"
+        android:textColor="@android:color/white"
         tools:layout_constraintTop_creator="1"
         tools:layout_constraintRight_creator="1"
         app:layout_constraintRight_toRightOf="parent"
