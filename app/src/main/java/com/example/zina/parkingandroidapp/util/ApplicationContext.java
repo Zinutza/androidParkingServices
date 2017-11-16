@@ -1,6 +1,7 @@
 package com.example.zina.parkingandroidapp.util;
 
 import com.example.zina.parkingandroidapp.gateway.FavouritesGateway;
+import com.example.zina.parkingandroidapp.gateway.RatingsGateway;
 import com.example.zina.parkingandroidapp.gateway.util.HttpUtils;
 import com.example.zina.parkingandroidapp.gateway.util.JsonUtils;
 import com.example.zina.parkingandroidapp.gateway.LoginGateway;
@@ -9,6 +10,7 @@ import com.example.zina.parkingandroidapp.gateway.RegistrationGateway;
 import com.example.zina.parkingandroidapp.services.FavouritesService;
 import com.example.zina.parkingandroidapp.services.LoginService;
 import com.example.zina.parkingandroidapp.services.ParkingLocationServices;
+import com.example.zina.parkingandroidapp.services.RatingsService;
 import com.example.zina.parkingandroidapp.services.RegistrationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -142,4 +144,25 @@ public class ApplicationContext {
         return favouritesGateway;
     }
 
+    private static RatingsService ratingsService;
+
+    public static RatingsService ratingsService() {
+        if(ratingsService == null) {
+            ratingsService = new RatingsService();
+            ratingsService.setRatingsGateway(ratingsGateway());
+        }
+        return ratingsService;
+
+    }
+
+    private static RatingsGateway ratingsGateway;
+
+    private static RatingsGateway ratingsGateway() {
+        if(ratingsGateway == null) {
+            ratingsGateway = new RatingsGateway();
+            ratingsGateway.setJsonUtils(jsonUtils());
+            ratingsGateway.setHttpUtils(httpUtils());
+        }
+        return ratingsGateway;
+    }
 }

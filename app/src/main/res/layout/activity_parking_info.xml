@@ -16,11 +16,11 @@
         android:layout_height="46dp"
         android:text="Parking Details"
         android:textSize="30sp"
+        android:layout_marginEnd="51dp"
         tools:layout_constraintTop_creator="1"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintBottom_creator="1"
         app:layout_constraintBottom_toBottomOf="@+id/imageView4"
-        android:layout_marginEnd="51dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageView4"
         android:layout_marginRight="51dp" />
@@ -30,29 +30,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Name"
+        android:layout_marginEnd="13dp"
         app:layout_constraintRight_toLeftOf="@+id/nameLabel"
         tools:layout_constraintTop_creator="1"
         tools:layout_constraintRight_creator="1"
-        tools:layout_constraintBottom_creator="1"
-        app:layout_constraintBottom_toBottomOf="@+id/addFavouriteButton"
-        android:layout_marginEnd="14dp"
-        android:layout_marginTop="191dp"
-        android:layout_marginBottom="190dp"
+        android:layout_marginTop="136dp"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginRight="14dp" />
+        android:layout_marginRight="13dp" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Type"
-        app:layout_constraintRight_toLeftOf="@+id/typeLabel"
+        app:layout_constraintRight_toLeftOf="@+id/ratingBar"
+        tools:layout_constraintTop_creator="1"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintBottom_creator="1"
-        app:layout_constraintBottom_toTopOf="@+id/textView5"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="29dp"
-        android:layout_marginRight="20dp" />
+        app:layout_constraintBottom_toBottomOf="@+id/textView5"
+        android:layout_marginTop="99dp"
+        app:layout_constraintTop_toBottomOf="@+id/imageView4"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="99dp"
+        app:layout_constraintLeft_toLeftOf="@+id/ratingBar" />
 
     <Button
         android:id="@+id/addFavouriteButton"
@@ -61,63 +61,60 @@
         android:text="Add to favourites"
         android:background="#19678C"
         android:textColor="@android:color/white"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintBottom_creator="1"
         app:layout_constraintBottom_toTopOf="@+id/removeFavouriteButton"
+        app:layout_constraintRight_toRightOf="parent"
         tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="41dp" />
+        android:layout_marginBottom="41dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintBottom_creator="1"
-        app:layout_constraintBottom_toTopOf="@+id/removeFavouriteButton"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="115dp"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toTopOf="@+id/addFavouriteButton"
         tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="116dp"
+        android:layout_marginBottom="20dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView3"
         android:layout_marginLeft="16dp" />
 
     <Button
         android:id="@+id/removeFavouriteButton"
-        android:layout_width="237dp"
+        android:layout_width="0dp"
         android:layout_height="54dp"
         android:text="Remove from favourites"
         android:background="#19678C"
         android:textColor="@android:color/white"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintBottom_creator="1"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="@+id/addFavouriteButton"
         tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="74dp" />
+        android:layout_marginBottom="74dp"
+        app:layout_constraintLeft_toLeftOf="@+id/addFavouriteButton" />
 
     <TextView
         android:id="@+id/nameLabel"
-        android:layout_width="237dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="3dp"
         tools:layout_constraintRight_creator="1"
-        android:layout_marginEnd="42dp"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintRight_toRightOf="@+id/typeLabel"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView3"
         tools:layout_constraintBaseline_creator="1"
-        android:layout_marginRight="42dp" />
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toRightOf="@+id/imageView4"
+        android:layout_marginRight="3dp" />
 
     <TextView
         android:id="@+id/typeLabel"
         android:layout_width="240dp"
         android:layout_height="wrap_content"
-        tools:layout_constraintRight_creator="1"
         android:layout_marginEnd="39dp"
+        tools:layout_constraintRight_creator="1"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView4"
         tools:layout_constraintBaseline_creator="1"
@@ -128,17 +125,44 @@
         android:layout_width="63dp"
         android:layout_height="78dp"
         app:srcCompat="@drawable/parking_info"
+        android:layout_marginStart="26dp"
+        android:layout_marginEnd="26dp"
         app:layout_constraintRight_toLeftOf="@+id/textView2"
         tools:layout_constraintTop_creator="1"
         tools:layout_constraintRight_creator="1"
-        android:layout_marginStart="14dp"
-        android:layout_marginEnd="14dp"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toTopOf="@+id/nameLabel"
         android:layout_marginTop="32dp"
         tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="26dp"
         app:layout_constraintLeft_toLeftOf="@+id/textView5"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginLeft="14dp"
-        android:layout_marginRight="14dp"
-        tools:layout_editor_absoluteY="40dp" />
+        android:layout_marginLeft="26dp"
+        android:layout_marginRight="26dp" />
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        android:layout_marginEnd="33dp"
+        app:layout_constraintRight_toRightOf="@+id/typeLabel"
+        android:layout_marginTop="30dp"
+        app:layout_constraintTop_toBottomOf="@+id/typeLabel"
+        android:layout_marginRight="33dp" />
+
+    <TextView
+        android:id="@+id/average"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toTopOf="@+id/addFavouriteButton"
+        app:layout_constraintRight_toRightOf="@+id/ratingBar"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="19dp"
+        app:layout_constraintLeft_toLeftOf="@+id/ratingBar" />
 
 </android.support.constraint.ConstraintLayout>

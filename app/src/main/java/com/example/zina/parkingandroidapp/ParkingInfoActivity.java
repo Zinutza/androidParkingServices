@@ -5,12 +5,15 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.zina.parkingandroidapp.model.FavouriteLocation;
 import com.example.zina.parkingandroidapp.model.ParkingLocation;
 import com.example.zina.parkingandroidapp.model.User;
 import com.example.zina.parkingandroidapp.services.FavouritesService;
+import com.example.zina.parkingandroidapp.services.RatingsService;
+import com.example.zina.parkingandroidapp.util.ApplicationContext;
 
 import java.util.List;
 
@@ -23,6 +26,7 @@ public class ParkingInfoActivity extends AppCompatActivity {
 
     TextView nameLabel;
     TextView typeLabel;
+    TextView tv_average;
 
     Button addFavouriteButton;
     Button removeFavouriteButton;
@@ -32,6 +36,9 @@ public class ParkingInfoActivity extends AppCompatActivity {
     List<ParkingLocation> favourites;
 
     FavouritesService favouritesService = favouritesService();
+    RatingsService ratingsService = ApplicationContext.ratingsService();
+
+    RatingBar ratingBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +47,8 @@ public class ParkingInfoActivity extends AppCompatActivity {
 
         nameLabel = (TextView) findViewById(R.id.nameLabel);
         typeLabel = (TextView) findViewById(R.id.typeLabel);
+        ratingBar = (RatingBar) findViewById(R.id.ratingBar);
+        tv_average = (TextView) findViewById(R.id.average);
 
         addFavouriteButton = (Button) findViewById(R.id.addFavouriteButton);
         addFavouriteButton.setVisibility(VISIBLE);
@@ -56,6 +65,8 @@ public class ParkingInfoActivity extends AppCompatActivity {
 
         nameLabel.setText(parkingLocation.getAddress());
 
+        setupRatingBar(user, parkingLocation);
+
         if(parkingLocation.getType().isFree()) {
             typeLabel.setText("Free");
         } else {
@@ -67,6 +78,25 @@ public class ParkingInfoActivity extends AppCompatActivity {
         } else {
             removeFavouriteButton.setVisibility(INVISIBLE);
         }
+    }
+
+    private void setupRatingBar(final User user, final ParkingLocation parkingLocation) {
+        final Long userRating = ratingsService.readUserRating(parkingLocation.getId(), user.getId());
+        Float average = ratingsService.readAverage(parkingLocation.getId());
+
+        if(userRating != 0) {
+            ratingBar.setRating(userRating);
+        }
+        tv_average.setText("Average " + average + " stars");
+
+
+
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                ratingsService.createOrUpdate(parkingLocation.getId(), user.getId(), v);
+            }
+        });
     }
 
     private boolean aFavourite(ParkingLocation parkingLocation) {
