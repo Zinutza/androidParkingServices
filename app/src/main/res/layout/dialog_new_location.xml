@@ -19,12 +19,15 @@
         android:layout_width="match_parent"
         android:layout_height="63dp"
         android:ems="10"
+        android:textColor="@android:color/black"
+        android:textColorHint="#777777"
         android:hint="Address"
         android:inputType="textPostalAddress" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
 
         <Spinner
             android:id="@+id/parking_type_spinner"

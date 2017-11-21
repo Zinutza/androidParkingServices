@@ -91,9 +91,14 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         Location location = tracker.getLocation();
         int locationCounter = 0;
         while(location == null) {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             locationCounter++;
             location = tracker.getLocation();
-            if(locationCounter == 100) {
+            if(locationCounter == 500) {
                 throw new IllegalStateException("Unable to find current location");
             }
         }
