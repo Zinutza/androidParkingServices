@@ -16,15 +16,15 @@ public class FavouritesService {
         return favouritesGateway.list(user);
     }
 
-    public void setFavouritesGateway(FavouritesGateway favouritesGateway) {
-        this.favouritesGateway = favouritesGateway;
-    }
-
     public void create(FavouriteLocation favouriteLocation) {
         favouritesGateway.create(favouriteLocation);
     }
 
     public void delete(FavouriteLocation favouriteLocation) {
         favouritesGateway.delete(favouriteLocation);
+    }
+
+    public void setFavouritesGateway(FavouritesGateway favouritesGateway) {
+        this.favouritesGateway = favouritesGateway;
     }
 }

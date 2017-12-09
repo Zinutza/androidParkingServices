@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class JsonUtils {
 
@@ -27,5 +28,13 @@ public class JsonUtils {
 
     public void setObjectMapper(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
+    }
+
+    public static <T> ArrayList<T> toArrayList(T[] elements) {
+        ArrayList<T> list = new ArrayList<T>();
+        for( T t : elements) {
+            list.add(t);
+        }
+        return list;
     }
 }

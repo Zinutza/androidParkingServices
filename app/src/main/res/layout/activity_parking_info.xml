@@ -30,13 +30,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Name"
-        android:layout_marginEnd="11dp"
-        app:layout_constraintRight_toLeftOf="@+id/nameLabel"
         tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        android:layout_marginTop="54dp"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4"
-        android:layout_marginRight="11dp" />
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toTopOf="@+id/addFavouriteButton"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="164dp"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="163dp"
+        app:layout_constraintLeft_toLeftOf="@+id/textView4"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="1dp" />
 
     <TextView
         android:id="@+id/textView4"
@@ -52,21 +55,18 @@
 
     <Button
         android:id="@+id/addFavouriteButton"
-        android:layout_width="237dp"
+        android:layout_width="0dp"
         android:layout_height="54dp"
         android:text="Add to favourites"
         android:background="#19678C"
         android:textColor="@android:color/white"
-        tools:layout_constraintTop_creator="1"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintBottom_creator="1"
-        app:layout_constraintBottom_toBottomOf="@+id/removeFavouriteButton"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="88dp"
+        app:layout_constraintBottom_toTopOf="@+id/removeFavouriteButton"
+        app:layout_constraintRight_toRightOf="@+id/removeFavouriteButton"
         tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="95dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/ratingBar" />
+        android:layout_marginBottom="10dp"
+        app:layout_constraintLeft_toLeftOf="@+id/removeFavouriteButton" />
 
     <TextView
         android:id="@+id/textView5"
@@ -82,35 +82,41 @@
 
     <Button
         android:id="@+id/removeFavouriteButton"
-        android:layout_width="237dp"
+        android:layout_width="0dp"
         android:layout_height="54dp"
         android:text="Remove from favourites"
         android:background="#19678C"
         android:textColor="@android:color/white"
+        tools:layout_constraintRight_creator="1"
         tools:layout_constraintBottom_creator="1"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/delete_location"
+        app:layout_constraintRight_toRightOf="@+id/delete_location"
         tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="74dp"
-        app:layout_constraintLeft_toLeftOf="@+id/addFavouriteButton" />
+        android:layout_marginBottom="13dp"
+        app:layout_constraintLeft_toLeftOf="@+id/delete_location" />
 
     <TextView
         android:id="@+id/nameLabel"
-        android:layout_width="240dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="39dp"
         tools:layout_constraintRight_creator="1"
+        android:layout_marginStart="47dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView3"
         tools:layout_constraintBaseline_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="@+id/textView3"
+        android:layout_marginLeft="47dp"
         android:layout_marginRight="39dp" />
 
     <TextView
         android:id="@+id/typeLabel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:layout_constraintRight_toLeftOf="@+id/nameLabel"
         tools:layout_constraintTop_creator="1"
         tools:layout_constraintRight_creator="1"
-        app:layout_constraintRight_toRightOf="@+id/nameLabel"
         android:layout_marginTop="28dp"
         app:layout_constraintTop_toBottomOf="@+id/nameLabel"
         tools:layout_constraintLeft_creator="1"
@@ -137,23 +143,23 @@
         android:id="@+id/ratingBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="33dp"
         tools:layout_constraintTop_creator="1"
         tools:layout_constraintRight_creator="1"
-        app:layout_constraintRight_toRightOf="@+id/typeLabel"
-        android:layout_marginTop="30dp"
-        app:layout_constraintTop_toBottomOf="@+id/typeLabel"
-        android:layout_marginRight="33dp" />
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="29dp"
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
         android:id="@+id/average"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
         android:layout_marginStart="99dp"
         android:layout_marginEnd="100dp"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
         app:layout_constraintRight_toRightOf="@+id/nameLabel"
         android:layout_marginTop="11dp"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
@@ -161,5 +167,21 @@
         app:layout_constraintLeft_toRightOf="@+id/textView4"
         android:layout_marginLeft="99dp"
         android:layout_marginRight="100dp" />
+
+    <Button
+        android:id="@+id/delete_location"
+        android:layout_width="237dp"
+        android:layout_height="0dp"
+        android:text="Delete Location"
+        android:background="@android:color/holo_red_dark"
+        android:textColor="@android:color/white"
+        android:visibility="invisible"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="38dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

@@ -18,6 +18,8 @@ public class ParkingLocation implements Serializable {
 
     private String address;
 
+    private Long creatorId;
+
     public String getAddress() {
         return address;
     }
@@ -61,5 +63,13 @@ public class ParkingLocation implements Serializable {
     @Override
     public String toString() {
         return address;
+    }
+
+    public Long getCreatorId() {
+        return creatorId;
+    }
+
+    public void setCreatorId(Long creatorId) {
+        this.creatorId = creatorId;
     }
 }

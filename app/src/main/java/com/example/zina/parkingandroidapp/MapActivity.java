@@ -34,6 +34,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -55,7 +56,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
     private ParkingLocation focusLocation;
 
-    private List<ParkingLocation> nearbyParking;
+    private ArrayList<ParkingLocation> nearbyParking;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,7 +134,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 View dialogLayout =  li.inflate(R.layout.dialog_new_location, null);
                 final Spinner parkingType = dialogLayout.findViewById(R.id.parking_type_spinner);
                 String[] parkingTypes = new String[]{"Free", "Paid"};
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, parkingTypes);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_item, parkingTypes);
                 parkingType.setAdapter(adapter);
 
                 final EditText etAddress = dialogLayout.findViewById(R.id.etAddress);
@@ -165,8 +166,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                             newParkingLocation.setType(ParkingType.valueOf(parkingType.getSelectedItem().toString().toUpperCase()));
                             newParkingLocation.setLatitude(point.latitude);
                             newParkingLocation.setLongitude(point.longitude);
+                            newParkingLocation.setCreatorId(user.getId());
                             ParkingLocation createdParkingLocation = parkingLocationServices.createParkingLocation(newParkingLocation);
                             addParkingLocationToMap(createdParkingLocation);
+                            nearbyParking.add(createdParkingLocation);
                             dialog.dismiss();
                         } else {
                             addressError.setVisibility(VISIBLE);

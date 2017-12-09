@@ -12,6 +12,7 @@ import com.example.zina.parkingandroidapp.model.FavouriteLocation;
 import com.example.zina.parkingandroidapp.model.ParkingLocation;
 import com.example.zina.parkingandroidapp.model.User;
 import com.example.zina.parkingandroidapp.services.FavouritesService;
+import com.example.zina.parkingandroidapp.services.ParkingLocationServices;
 import com.example.zina.parkingandroidapp.services.RatingsService;
 import com.example.zina.parkingandroidapp.util.ApplicationContext;
 
@@ -30,6 +31,7 @@ public class ParkingInfoActivity extends AppCompatActivity {
 
     Button addFavouriteButton;
     Button removeFavouriteButton;
+    Button deleteLocationButton;
 
     ParkingLocation parkingLocation;
     User user;
@@ -37,6 +39,7 @@ public class ParkingInfoActivity extends AppCompatActivity {
 
     FavouritesService favouritesService = favouritesService();
     RatingsService ratingsService = ApplicationContext.ratingsService();
+    ParkingLocationServices parkingLocationServices = ApplicationContext.parkingLocationServices();
 
     RatingBar ratingBar;
 
@@ -57,9 +60,14 @@ public class ParkingInfoActivity extends AppCompatActivity {
         removeFavouriteButton.setVisibility(VISIBLE);
         removeFavouriteButton.setOnClickListener(new RemoveButtonOnClickListener());
 
+        deleteLocationButton = (Button) findViewById(R.id.delete_location);
+        deleteLocationButton.setOnClickListener(new DeleteLocationButtonOnClickListener());
+
         Intent intent = getIntent();
         user = (User) intent.getSerializableExtra("user");
         parkingLocation = (ParkingLocation) intent.getSerializableExtra("parkingLocation");
+
+        displayDeleteButton(user, parkingLocation);
 
         favourites = favouritesService.list(user);
 
@@ -77,6 +85,12 @@ public class ParkingInfoActivity extends AppCompatActivity {
             addFavouriteButton.setVisibility(INVISIBLE);
         } else {
             removeFavouriteButton.setVisibility(INVISIBLE);
+        }
+    }
+
+    private void displayDeleteButton(User user, ParkingLocation parkingLocation) {
+        if(user.getId().equals(parkingLocation.getCreatorId())) {
+            deleteLocationButton.setVisibility(VISIBLE);
         }
     }
 
@@ -136,5 +150,11 @@ public class ParkingInfoActivity extends AppCompatActivity {
         }
     }
 
-
+    private class DeleteLocationButtonOnClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            parkingLocationServices.delete(parkingLocation.getId());
+            transitionToMapScreen();
+        }
+    }
 }
