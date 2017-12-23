@@ -9,6 +9,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
@@ -42,6 +43,7 @@ public class HttpUtils {
     }
 
     public HttpResponse makeRequest(HttpUriRequest request) {
+        httpClient = HttpClientBuilder.create().build();
         try {
             HttpResponse response = httpClient.execute(request);
             if(response.getStatusLine().getStatusCode() == 404) {

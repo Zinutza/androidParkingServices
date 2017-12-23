@@ -1,21 +1,18 @@
 package com.example.zina.parkingandroidapp.util;
 
 import com.example.zina.parkingandroidapp.gateway.FavouritesGateway;
-import com.example.zina.parkingandroidapp.gateway.RatingsGateway;
-import com.example.zina.parkingandroidapp.gateway.util.HttpUtils;
-import com.example.zina.parkingandroidapp.gateway.util.JsonUtils;
 import com.example.zina.parkingandroidapp.gateway.LoginGateway;
 import com.example.zina.parkingandroidapp.gateway.ParkingLocationGateway;
+import com.example.zina.parkingandroidapp.gateway.RatingsGateway;
 import com.example.zina.parkingandroidapp.gateway.RegistrationGateway;
+import com.example.zina.parkingandroidapp.gateway.util.HttpUtils;
+import com.example.zina.parkingandroidapp.gateway.util.JsonUtils;
 import com.example.zina.parkingandroidapp.services.FavouritesService;
 import com.example.zina.parkingandroidapp.services.LoginService;
 import com.example.zina.parkingandroidapp.services.ParkingLocationServices;
 import com.example.zina.parkingandroidapp.services.RatingsService;
 import com.example.zina.parkingandroidapp.services.RegistrationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import org.apache.http.client.HttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
 
 
 public class ApplicationContext {
@@ -35,8 +32,6 @@ public class ApplicationContext {
     public static RegistrationGateway registrationGateway() {
         if(registrationGateway == null) {
             registrationGateway = new RegistrationGateway();
-            registrationGateway.setObectMapper(objectMapper());
-            registrationGateway.setHttpClient(httpClient());
             registrationGateway.setHttpUtils(httpUtils());
             registrationGateway.setJsonUtils(jsonUtils());
         }
@@ -73,21 +68,11 @@ public class ApplicationContext {
         return objectMapper;
     }
 
-    private static HttpClient httpClient;
-
-    public static HttpClient httpClient() {
-        if(httpClient == null) {
-            httpClient = HttpClientBuilder.create().build();
-        }
-        return httpClient;
-    }
-
     private static HttpUtils httpUtils;
 
     public static HttpUtils httpUtils() {
         if(httpUtils == null) {
             httpUtils = new HttpUtils();
-            httpUtils.setHttpClient(httpClient());
         }
         return httpUtils;
     }
